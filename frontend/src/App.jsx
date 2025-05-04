@@ -6,6 +6,16 @@ function App() {
 
   return (
     <>
+   
+<div class="header">キャンセル代行CanCan</div>
+<div class="body">
+    <div class="main">
+    <p>a------</p>
+    </div>
+    <div class="setting">
+      <button class="GObutton">GO</button>
+    </div>
+</div>
     </>
   )
 }
