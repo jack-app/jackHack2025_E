@@ -1,11 +1,11 @@
 from fastapi import FastAPI
-from calendar import google_calendar_all_exclude_holidays
+from google_calendar import google_calendar_all_exclude_holidays
 
 app = FastAPI()
 
 @app.get("/")
 async def index():
-    return {"message":"FastAPIÇæÇº"}
+    return {"message":"FastAPI„Å†„Åû"}
 
 @app.get("/calendar/events")
 def get_calendar_events():
