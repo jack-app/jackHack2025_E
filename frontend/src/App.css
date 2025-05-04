@@ -7,11 +7,16 @@
 
 .header {
   position: fixed;
-  background-color: red;
+  background-color: #333;
+  color:white;
   width:100%;
   top:0;
   left:0;
   height:10vh;
+  font-family: 'Yu Gothic';
+  font-weight: bold;
+  font-size: 30px;
+
 }
 .body{
   left:0;
@@ -28,19 +33,21 @@
 }
 .setting{
   background-color: antiquewhite;
-  /* flex-grow:1; */
+  padding: 16px;
   width: 30%;
+  font-family: 'M PLUS Rounded 1c';
+  font-weight: 700;
+  text-align:  center; 
 }
 
 .GObutton {
   background-color:#AFDFE4;
   cursor: pointer;
-  border-radius :8px;
+  border-radius :16px;
   font-family: 'M PLUS Rounded 1c';
   font-weight: 700;
   transition-duration: 2.0s;
 }
 .GObutton:hover {
   transform: scale(1.1);
-
 }
