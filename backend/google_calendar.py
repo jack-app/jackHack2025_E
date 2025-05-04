@@ -1,4 +1,3 @@
-
 import datetime
 import os.path
 
@@ -10,9 +9,9 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
-def google_calendar_all_exclude_holidays():
+def google_calendar_next_month_exclude_holidays():
     """
-    すべてのカレンダーから予定を取得し、「祝日」カレンダーに属する予定を除外して表示。
+    現在から1ヶ月分の全カレンダーの予定（祝日除く）を取得し、index・start・summary を出力する。
     """
     creds = None
     if os.path.exists("token.json"):
@@ -32,18 +31,22 @@ def google_calendar_all_exclude_holidays():
     try:
         service = build("calendar", "v3", credentials=creds)
 
-        now = datetime.datetime.now(datetime.UTC).isoformat()
-        print("全カレンダーから予定を取得中（祝日カレンダーは除外）")
+        now = datetime.datetime.now(datetime.UTC)
+        one_month_later = now + datetime.timedelta(days=30)
 
-        # カレンダー一覧を取得
+        time_min = now.isoformat()
+        time_max = one_month_later.isoformat()
+
+        print("1ヶ月以内の予定を取得中（祝日除く）")
+
         calendar_list = service.calendarList().list().execute()
 
-        # 「祝日」カレンダーIDを収集
-        holiday_calendar_ids = []
-        for calendar in calendar_list["items"]:
-            summary = calendar.get("summary", "")
-            if "祝日" in summary or "Holiday" in summary:
-                holiday_calendar_ids.append(calendar["id"])
+        # 「祝日」カレンダーIDの特定
+        holiday_calendar_ids = [
+            calendar["id"]
+            for calendar in calendar_list["items"]
+            if "祝日" in calendar.get("summary", "") or "Holiday" in calendar.get("summary", "")
+        ]
 
         all_events = []
 
@@ -51,7 +54,6 @@ def google_calendar_all_exclude_holidays():
             calendar_id = calendar["id"]
             summary = calendar.get("summary", "")
 
-            # 「祝日」カレンダーはスキップ
             if calendar_id in holiday_calendar_ids:
                 print(f"スキップ：{summary}（祝日カレンダー）")
                 continue
@@ -61,8 +63,9 @@ def google_calendar_all_exclude_holidays():
                     service.events()
                     .list(
                         calendarId=calendar_id,
-                        timeMin=now,
-                        maxResults=10,
+                        timeMin=time_min,
+                        timeMax=time_max,
+                        maxResults=100,
                         singleEvents=True,
                         orderBy="startTime",
                     )
@@ -77,19 +80,23 @@ def google_calendar_all_exclude_holidays():
             except Exception as e:
                 print(f"{calendar_id} の取得でエラー: {e}")
 
-        # 時間順にソート
         all_events.sort(key=lambda x: x[0])
 
         if not all_events:
             print("予定は見つかりませんでした。")
-            return "予定がありません"
+            return []
 
-        for start, summary in all_events:
-            print(f"{start} {summary}")
+        result = []
+        for idx, (start, summary) in enumerate(all_events):
+            print(f"{idx}: {start} {summary}")
+            result.append({
+                "index": idx,
+                "start": start,
+                "summary": summary,
+            })
 
-        return all_events
+        return result
 
     except HttpError as error:
         print(f"Google API エラー: {error}")
-        return "APIエラー"
-
+        return []
