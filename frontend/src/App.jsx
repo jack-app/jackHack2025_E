@@ -5,14 +5,28 @@ import logo from './assets/CanCan.png'
 
 function App() {
   const [count, setCount] = useState(0)
-  
-
+ 
   return (
     <>
-   
-    <div class="header">
-      <img src={logo} class="logo" alt="logo" />
-      {/* キャンセル代行CanCan */}
+
+<div class="header">
+  <img src={logo} class="logo" alt="logo" />
+  {/* キャンセル代行CanCan */}
+</div>
+<div class="body">
+    <div class="main">
+    <Button variant="contained"
+    style={{fontSize: '30px'}}
+    sx={{
+      position: 'absolute',
+      right: '50%',
+      top: '10%',
+      width: '500px',
+      height: '50px',
+    }}
+    >
+    カレンダーから予定を取得
+    </Button>
     </div>
     <div class="body">
       <div class="main">

@@ -1,4 +1,4 @@
-#root {
+/*#root {
   /* max-width: 1280px; */
   /* margin: 0 auto; */
   /* padding: 2rem; */
@@ -13,9 +13,9 @@
   top:0;
   left:0;
   height:10vh;
-}
-
-.logo {
+  }
+  
+  .logo {
   position: fixed;
   height: 10vh;
 }
@@ -68,17 +68,20 @@ fieldset legend {
   font-weight: 700;
   text-align: center;
   font-size: 1.5rem;
+
 }
 
 .GObutton {
   margin-top:20px;
   background-color:#AFDFE4;
   cursor: pointer;
-  border-radius :16px;
   font-family:'M PLUS Rounded 1c';
+  border-radius :8px;
+
   font-weight: 700;
   transition-duration: 2.0s;
 }
 .GObutton:hover {
   transform: scale(1.1);
+
 }
