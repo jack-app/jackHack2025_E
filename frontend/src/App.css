@@ -1,41 +1,82 @@
-#root {
+/*#root {
   /* max-width: 1280px; */
   /* margin: 0 auto; */
   /* padding: 2rem; */
   /* text-align: center; */
+  font-size: 16px;
 }
 
 .header {
   position: fixed;
-  background-color: red;
-  width: 100%;
-  top: 0;
-  left: 0;
+  background: linear-gradient(180deg, rgb(165,209,255,0.75),rgb(163,239,237,0.75));
+  width:100%;
+  top:0;
+  left:0;
+  height:10vh;
+  }
+  
+  .logo {
+  position: fixed;
   height: 10vh;
 }
-.body {
-  left: 0;
-  width: 100vw;
-  display: flex;
-  height: 90vh;
+
+.body{
+  left:0;
+  width:100vw;
+  display:flex;
+  height:90vh;
   margin-top: 10vh;
 }
+
 .main {
-  background-color: #888;
-  /* flex-grow:1; */
-  width: 70%;
+  background-color:#fff;
+  flex:7;
+  border-right: solid 3px;
+  border-image: linear-gradient(to bottom, rgb(163,239,237,0.75), rgba(155, 255, 165, 0.75)) 1;
 }
-.setting {
-  background-color: antiquewhite;
-  /* flex-grow:1; */
-  width: 30%;
+
+.setting{
+  background-color: #fff;
+  flex:3;
+  padding: 16px;
+  font-family: 'Zen Maru Gothic';
+  text-align:  center;
+  color: #333;
+}
+
+fieldset {
+  border: none;
+}
+
+fieldset div {
+  font-weight: 400;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+fieldset input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+fieldset label {
+  cursor: pointer;
+}
+
+fieldset legend {
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.5rem;
+
 }
 
 .GObutton {
-  background-color: #afdfe4;
+  margin-top:20px;
+  background-color:#AFDFE4;
   cursor: pointer;
-  border-radius: 8px;
-  font-family: "M PLUS Rounded 1c";
+  font-family:'M PLUS Rounded 1c';
+  border-radius :8px;
   font-weight: 700;
   transition-duration: 2s;
 }
@@ -53,10 +94,10 @@ button {
 .selected-event {
   margin-top: 20px;
   padding: 20px;
-  background-color: grey; /* ”wŒi‚ğ”–‚¢ƒOƒŒ[‚É */
-  border: 1px solid #ccc; /* ‹«ŠEü‚ğŒy‚­•\¦ */
-  border-radius: 8px; /* Šp‚ğŠÛ‚ß‚é */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Œy‚¢‰e‚ğ’Ç‰Á */
+  background-color: grey; /* ï¿½wï¿½iï¿½ğ”–‚ï¿½ï¿½Oï¿½ï¿½ï¿½[ï¿½ï¿½ */
+  border: 1px solid #ccc; /* ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½\ï¿½ï¿½ */
+  border-radius: 8px; /* ï¿½pï¿½ï¿½ï¿½Û‚ß‚ï¿½ */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* ï¿½yï¿½ï¿½ï¿½eï¿½ï¿½Ç‰ï¿½ */
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
