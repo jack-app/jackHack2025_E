@@ -46,9 +46,8 @@ reasons = re.findall(r"\d+\.\s*(.+)", txt)
 print(txt)
 
 usr_reason = str(input("予定を断るための理由を選択してください："))
-m = None
 
-message = [
+dialogue = [
     {
         "role": "system",
         "content": "日本語で返答してください。",
@@ -59,35 +58,18 @@ message = [
     },
     {
         "role": "system",
-        "content": f"{usr_schedule}を,{usr_reason}を理由に断る文章を出力してください。",
+        "content": f"{usr_schedule}を{usr_reason}を理由に断る文章を出力してください。",
     },
 ]
 
 date = input("代替日を入力してください：")
 if date != "":
-    message.append(
+    dialogue.append(
         {
             "role": "system",
             "content": f"キャンセルする予定に対する代替日として{date}を提案してください。",
         }
     )
-
-message = [
-    {
-        "role": "system",
-        "content": "日本語で返答してください。",
-    },
-    {
-        "role": "system",
-        "content": f"{usr_schedule}を,{usr_reason}を理由に断るビジネスメール風の文章を出力してください。",
-    },
-]
-
-if not (m is None):
-    {message.append(m)}
-
-res_2 = openai.chat.completions.create(model="gpt-4o-mini", messages=message)
-
 
 while True:  # 整数で入力されていない場合は受け付けない
     usr_taido = tuple(
@@ -96,21 +78,23 @@ while True:  # 整数で入力されていない場合は受け付けない
         ).split()
     )
     try:
-        int_usr_taido = tuple(int(i) for i in usr_taido)
+        int_usr_taido = tuple(int(i)-1 for i in usr_taido)
         break
     except ValueError:
         print("整数で入力してください。")
+
+dialogue.append(
+    {
+        "role": "system",
+        "content": feedback.feedback(usr_aite-1, *int_usr_taido),
+    })
+
+for i in dialogue:
+    print(i["content"])
+
+
 res = openai.chat.completions.create(
     model="gpt-4o-mini",
-    messages=[
-        {
-            "role": "system",
-            "content": "日本語で返答してください。",
-        },
-        {
-            "role": "system",
-            "content": feedback.feedback(usr_aite, *int_usr_taido),
-        },
-    ],
+    messages=dialogue
 )
 print(res.choices[0].message.content)
