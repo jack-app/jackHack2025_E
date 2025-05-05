@@ -8,39 +8,59 @@
 .header {
   position: fixed;
   background-color: red;
-  width:100%;
-  top:0;
-  left:0;
-  height:10vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 10vh;
 }
-.body{
-  left:0;
-  width:100vw;
-  display:flex;
-  height:90vh;
+.body {
+  left: 0;
+  width: 100vw;
+  display: flex;
+  height: 90vh;
   margin-top: 10vh;
 }
 .main {
-
   background-color: #888;
   /* flex-grow:1; */
   width: 70%;
 }
-.setting{
+.setting {
   background-color: antiquewhite;
   /* flex-grow:1; */
   width: 30%;
 }
 
 .GObutton {
-  background-color:#AFDFE4;
+  background-color: #afdfe4;
   cursor: pointer;
-  border-radius :8px;
-  font-family: 'M PLUS Rounded 1c';
+  border-radius: 8px;
+  font-family: "M PLUS Rounded 1c";
   font-weight: 700;
-  transition-duration: 2.0s;
+  transition-duration: 2s;
 }
 .GObutton:hover {
   transform: scale(1.1);
+}
 
+button {
+  background-color: black;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.selected-event {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: grey; /* ”wŒi‚ğ”–‚¢ƒOƒŒ[‚É */
+  border: 1px solid #ccc; /* ‹«ŠEü‚ğŒy‚­•\¦ */
+  border-radius: 8px; /* Šp‚ğŠÛ‚ß‚é */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Œy‚¢‰e‚ğ’Ç‰Á */
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cancel-message {
 }
