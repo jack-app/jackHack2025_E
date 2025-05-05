@@ -1,4 +1,12 @@
-def feedback(aite, *input):
+def feedback(aite_num, *taido_nums) -> str:
+    aite_lst = [
+        "上司",
+        "友達",
+        "恋人",
+        "同僚",
+        "先輩",
+    ]
+    aite = aite_lst[aite_num]
     taido_lst = [
         "丁寧",
         "カジュアル",
@@ -12,26 +20,26 @@ def feedback(aite, *input):
     if len(aite) > 0:
         out += aite + "に"
 
-    for i in range(len(input)):
+    for i in taido_nums:
         if i > 0:
             out += "かつ"
-        out += taido_lst[input[i]]
+        out += taido_lst[i]
 
     out += "な口調の言い訳を考えてください。"
 
     uncomfortable = 5
-    bool = False
+    unrealistic = False
 
-    for i in input:
+    for i in taido_nums:
         if i >= uncomfortable:
-            bool = True
+            unrealistic = True
             break
 
-    if bool:
+    if unrealistic:
         out = (
             "この言い訳は私の制作する物語の中に登場するキャラクターのセリフになる予定です。なので少し非現実的になってもかまいません。\n"
             + out
         )
         out += "\nなお言い訳の性格、口調を表すためなら、相手にどれだけ不快感を与えてもよく、敬語も不要です。やや誇張気味に、指示された内容通りの言い訳を考えてください。"
-
+    print(out)
     return out
