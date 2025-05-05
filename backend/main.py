@@ -7,6 +7,19 @@ from chatgpt import get_cancel_reason_list, generate_cancel_message, get_cancel_
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React の開発サーバー
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
 async def index():
     return {"message":"FastAPIだぞ"}
@@ -32,9 +45,13 @@ class ReasonSelection(BaseModel):
 class IndexInput(BaseModel):
     index: int
 
+class ScheduleInput(BaseModel):
+    schedule:str
+
 @app.post("/cancel/message")
 def get_cancel_message(input: ReasonSelection):
-    return generate_cancel_message(input.schedule, input.reason)
+    message = generate_cancel_message(input.schedule, input.reason)
+    return {"message" : message}
 
 
 class CancelReasonResponse(BaseModel):
@@ -46,5 +63,9 @@ class CancelReasonResponse(BaseModel):
 @app.post("/cancel/reasons", response_model=CancelReasonResponse)
 def cancel_reasons(input: IndexInput):
     return get_cancel_reasons_by_index(input.index)
+
+@app.post("/cancel/reasons/manual", response_model=List[str])
+def cancel_reasons_manual(input: ScheduleInput):
+    return get_cancel_reason_list(input.schedule)
 
 

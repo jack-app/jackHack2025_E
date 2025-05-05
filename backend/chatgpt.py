@@ -27,6 +27,9 @@ def generate_cancel_message(schedule: str, reason: str) -> dict:
             {"role": "system", "content": f"{schedule}を{reason}を理由に丁寧に断るビジネスメールを作成してください。"},
         ],
     )
+
+    # print(res.choices[0].message.content)
+
     return {"message": res.choices[0].message.content}
 
 from typing import List
@@ -70,4 +73,23 @@ def get_cancel_reasons_by_index(index: int) -> Dict[str, Union[str, List[str]]]:
         "summary": target_summary,
         "cancel_reasons": reasons
     }
+
+def get_cancel_reason_list(schedule: str) -> List[str]:
+    """
+    任意の予定（文字列）に対して、その予定を断る理由の候補を10個返す。
+    """
+    res = openai.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "日本語で返答してください。"},
+            {"role": "system", "content": "以下の予定に対して、キャンセル理由の候補を10個挙げてください（単語・箇条書き）。"},
+            {"role": "user", "content": schedule},
+        ],
+    )
+
+    raw = res.choices[0].message.content.strip()
+    print("GPTの出力内容:\n", raw)
+
+    lines = [line.strip() for line in raw.splitlines() if line.strip()]
+    return [line.lstrip("-0123456789. ").strip() for line in lines]
 
