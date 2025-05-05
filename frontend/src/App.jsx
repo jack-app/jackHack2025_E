@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import "./App.css";
 import {Button,TextField,Checkbox, FormGroup, FormControlLabel, FormLabel} from '@mui/material';
 import logo from './assets/CanCan.png'
@@ -10,6 +10,7 @@ function App() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null); // 追加：選択中のイベント
   const [reasons, setReasons] = useState([]);
+  const [cancelMessage, setCancelMessage] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -64,50 +65,25 @@ function App() {
 
   return (
     <>
-   <div class="header">
-   <img src={logo} class="logo" alt="logo" />
+   <div className="header">
+   <img src={logo} className="logo" alt="logo" />
     {/* キャンセル代行CanCan */}
     </div>
       <div className="body">
         <div className="main">
-           <TextField
-          id="standard-basic" label="キャンセルしたい予定を入力" variant="standard" multiline maxRows={4}
-          sx={{position:'absolute',
-            width:'500px',
-            left: '10%',
-            bottom : '5%',
-            backgroundColor: '#f9f9f9',}}>
-        </TextField>
-        <Button variant="contained"
-          sx={{ position: 'absolute',
-                bottom: '5%',
-                left:'50%',
-          }}>
-          送信
-        </Button>
-        <Button variant="contained"
-        style={{fontSize: '30px'}}
-        sx={{
-          position: 'absolute',
-          right: '50%',
-          top: '10%',
-          width: '500px',
-          height: '50px',
-        }}
-        >
-        カレンダーから予定を取得
-        </Button>
-      </div>
-          {user ? (
+        {user ? (
+        <>
+          <p>{user.displayName}さんでログイン中</p>
+          <img src={user.photoURL} width="80" alt="profile" />
+          <br />
+          <button className="GObutton" onClick={handleLogout}>ログアウト</button>
+        </>
+      ) : (
+        <button onClick={handleLogin}>Googleでログイン</button>
+      )}          
+        {user ? (
             <>
-              <p>{user.displayName} さんでログイン中</p>
-              <img src={user.photoURL} alt="profile" width="80" />
-              <br />
-              <button className="GObutton" onClick={handleLogout}>
-                ログアウト
-              </button>
-
-              <div className="event-list">
+                <div className="event-list">
                 <h3>予定一覧</h3>
                 <ul>
                   {events.map((event, idx) => (
@@ -139,52 +115,38 @@ function App() {
                     ))}
                   </ul>
                 </div>
-              )}
+            )}
+              {cancelMessage && (
+                    <div className="cancel-message">
+                      <h4>生成されたキャンセル文章</h4>
+                      <p>{cancelMessage}</p>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard
+                            .writeText(cancelMessage)
+                            .then(() => alert("コピーしました！"))
+                            .catch(() => alert("コピーに失敗しました"));
+                        }}
+                        style={{
+                          marginTop: "10px",
+                          padding: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        コピーする
+                      </button>
+                    </div>
+                  )}
             </>
           ) : (
             <>
             
-      <div class="setting">
-        <form>
-          <fieldset>
-            <legend>態度</legend>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_1" />
-            <label for="atti_1">丁寧</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_2" />
-            <label for="atti_2">カジュアル</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_3" />
-            <label for="atti_3">申し訳なさ強め</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_4" />
-            <label for="atti_4">ややおびえる感じ</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_5" />
-            <label for="atti_5">すごく反省している感じ</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_6" />
-            <label for="atti_6">まったく反省していない感じ</label>
-          </div>
-          <div>
-            <input type="checkbox" name="attitude" id="atti_7" />
-            <label for="atti_7">傲慢で見下す感じ</label>
-          </div>
-          </fieldset>
-        </form>
-        <button class="GObutton">GO</button>
-      </div>
-    </div>
+
             </>
           )}
         </div>
-      </div>
+        </div>
+        
     </>
   );
 }
