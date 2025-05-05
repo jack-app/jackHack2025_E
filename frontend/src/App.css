@@ -2,17 +2,24 @@
   /* max-width: 1280px; */
   /* margin: 0 auto; */
   /* padding: 2rem; */
-  /* text-align: center; }*/
-
+  /* text-align: center; */
+  font-size: 16px;
+}
 
 .header {
   position: fixed;
-  background-color: red;
+  background: linear-gradient(180deg, rgb(165,209,255,0.75),rgb(163,239,237,0.75));
   width:100%;
   top:0;
   left:0;
   height:10vh;
+  }
+  
+  .logo {
+  position: fixed;
+  height: 10vh;
 }
+
 .body{
   left:0;
   width:100vw;
@@ -20,23 +27,57 @@
   height:90vh;
   margin-top: 10vh;
 }
-.main {
 
-  background-color: #eee;
-  /* flex-grow:1; */
-  width: 70%;
+.main {
+  background-color:#fff;
+  flex:7;
+  border-right: solid 3px;
+  border-image: linear-gradient(to bottom, rgb(163,239,237,0.75), rgba(155, 255, 165, 0.75)) 1;
 }
+
 .setting{
-  background-color: antiquewhite;
-  /* flex-grow:1; */
-  width: 30%;
+  background-color: #fff;
+  flex:3;
+  padding: 16px;
+  font-family: 'Zen Maru Gothic';
+  text-align:  center;
+  color: #333;
+}
+
+fieldset {
+  border: none;
+}
+
+fieldset div {
+  font-weight: 400;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+fieldset input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+fieldset label {
+  cursor: pointer;
+}
+
+fieldset legend {
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.5rem;
+
 }
 
 .GObutton {
+  margin-top:20px;
   background-color:#AFDFE4;
   cursor: pointer;
+  font-family:'M PLUS Rounded 1c';
   border-radius :8px;
-  font-family: 'M PLUS Rounded 1c';
+
   font-weight: 700;
   transition-duration: 2.0s;
 }
