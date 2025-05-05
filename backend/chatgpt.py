@@ -10,7 +10,7 @@ openai.api_key = os.getenv("API_KEY")
 
 usr_schedule = str(input("キャンセルしたい予定を入力してください："))
 
-res_1 = openai.chat.completions.create(
+reasons_res = openai.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
         {
@@ -40,7 +40,7 @@ while True:
         print("整数で入力してください。")
 
 # 取得した理由の候補をリストに変換
-txt = res_1.choices[0].message.content
+txt = reasons_res.choices[0].message.content
 reasons = re.findall(r"\d+\.\s*(.+)", txt)
 
 print(txt)
@@ -88,10 +88,6 @@ dialogue.append(
         "role": "system",
         "content": feedback.feedback(usr_aite-1, *int_usr_taido),
     })
-
-for i in dialogue:
-    print(i["content"])
-
 
 res = openai.chat.completions.create(
     model="gpt-4o-mini",
