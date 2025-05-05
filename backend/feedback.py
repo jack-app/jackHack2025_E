@@ -1,5 +1,5 @@
 def feedback(aite, *input):
-    A = [
+    taido_lst = [
         "丁寧",
         "カジュアル",
         "申し訳なさ強め",
@@ -15,7 +15,7 @@ def feedback(aite, *input):
     for i in range(len(input)):
         if i > 0:
             out += "かつ"
-        out += A[input[i]]
+        out += taido_lst[input[i]]
 
     out += "な口調の予定をキャンセルする言い訳を考えてください。"
 

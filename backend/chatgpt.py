@@ -31,13 +31,13 @@ res_1 = openai.chat.completions.create(
 usr_aite = str(input("言い訳を行う相手を入力してください。:"))
 
 # 取得した理由の候補をリストに変換
-txt=res_1.choices[0].message.content
+txt = res_1.choices[0].message.content
 reasons = re.findall(r"\d+\.\s*(.+)", txt)
 
 print(txt)
 
 usr_reason = str(input("予定を断るための理由を選択してください："))
-m=None
+m = None
 
 message=[
         {
