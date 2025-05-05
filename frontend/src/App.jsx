@@ -6,8 +6,9 @@ import { auth, provider } from "./firebase";
 function App() {
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null); // 追加：選択中のイベント
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [reasons, setReasons] = useState([]);
+  const [cancelMessage, setCancelMessage] = useState(""); // ✅ キャンセル文
 
   const handleLogin = async () => {
     try {
@@ -35,6 +36,8 @@ function App() {
       setUser(null);
       setEvents([]);
       setSelectedEvent(null);
+      setReasons([]);
+      setCancelMessage("");
     } catch (err) {
       console.error("ログアウト失敗:", err);
     }
@@ -42,7 +45,8 @@ function App() {
 
   const handleSelectEvent = async (event) => {
     setSelectedEvent(event);
-    setReasons([]); // 前の理由をクリア
+    setReasons([]);
+    setCancelMessage(""); // reset
 
     try {
       const res = await fetch("http://localhost:8000/cancel/reasons/manual", {
@@ -57,6 +61,30 @@ function App() {
       setReasons(data);
     } catch (err) {
       console.error("キャンセル理由取得失敗:", err);
+    }
+  };
+
+  // ✅ 理由を選んだとき、キャンセル文を生成
+  const handleReasonClick = async (reason) => {
+    if (!selectedEvent) return;
+
+    try {
+      const res = await fetch("http://localhost:8000/cancel/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          schedule: selectedEvent.summary,
+          reason: reason,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data.message.message);
+      setCancelMessage(data.message.message); // ← FastAPI 側が {"message": "..."} を返すことが前提
+    } catch (err) {
+      console.error("キャンセル文章生成失敗:", err);
     }
   };
 
@@ -101,10 +129,19 @@ function App() {
                   <ul>
                     {reasons.map((reason, idx) => (
                       <li key={idx}>
-                        <button>{reason}</button>
+                        <button onClick={() => handleReasonClick(reason)}>
+                          {reason}
+                        </button>
                       </li>
                     ))}
                   </ul>
+
+                  {cancelMessage && (
+                    <div className="cancel-message">
+                      <h4>生成されたキャンセル文章</h4>
+                      <p>{cancelMessage}</p>
+                    </div>
+                  )}
                 </div>
               )}
             </>
