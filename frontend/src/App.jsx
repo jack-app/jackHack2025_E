@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "./App.css";
-import {Button,TextField,Checkbox, FormGroup, FormControlLabel, FormLabel} from '@mui/material';
+import {Button,Avatar,Box,Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Typography} from '@mui/material';
 import logo from './assets/CanCan.png'
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "./firebase";
@@ -96,7 +96,7 @@ function App() {
   };
 
 
-  // ✅ 理由を選んだとき、キャンセル文を生成
+  // 理由を選んだとき、キャンセル文を生成
   const handleReasonClick = async (reason) => {
     if (!selectedEvent) return;
 
@@ -130,8 +130,12 @@ function App() {
         <div className="main">
         {user ? (
         <>
-          <p>{user.displayName}さんでログイン中</p>
-          <img src={user.photoURL} width="80" alt="profile" />
+          <Box color={"#111111"} fontSize={"15px"} 
+          sx={{backgroundColor:"#e3e3e3", position: "absolute", right:"10px", top: "20vh", padding:"2px",}}>
+            {user.displayName}さんでログイン中
+            </Box>
+          <Avatar img src={user.photoURL} alt="profile" 
+            sx={{position: "absolute", top:"11vh", right: "30px", width: 50, height: 50}} />
           <br />
           <button className="GObutton" onClick={handleLogout}>ログアウト</button>
         </>
@@ -141,16 +145,20 @@ function App() {
         {user ? (
             <>
                 <div className="event-list">
-                <h3>予定一覧</h3>
+                <Grid backgroundColor={"#aaa"} margin={"3px"} width={"80px"} sx={{position:"absolute", left:"5%", top:"10vh"}}>
+                <Typography fontWeight={"bold"} margin={"5px"}>
+                  予定一覧
+                </Typography>  
+                </Grid>
                 <ul>
                   {events.map((event, idx) => (
                     <li key={idx}>
-                      <button
+                      <Button variant="contained"
                         onClick={() => handleSelectEvent(event)}
-                        style={{ margin: "5px", padding: "8px" }}
+                        style={{ margin: "1px", padding: "10px" }}
                       >
                         {event.start} - {event.summary}
-                      </button>
+                      </Button>
                     </li>
                   ))}
                 </ul>
