@@ -19,13 +19,12 @@ def feedback(aite_num, *taido_nums) -> str:
     out = ""
     if len(aite) > 0:
         out += aite + "に"
-    bool=False
+    bool = False
     for i in taido_nums:
         if bool:
             out += "かつ"
         out += taido_lst[i]
-        bool=True
-
+        bool = True
     out += "な口調で予定をキャンセルする言い訳を考えてください。"
 
     uncomfortable = 5
@@ -41,4 +40,5 @@ def feedback(aite_num, *taido_nums) -> str:
             + out
         )
         out += "\nなお言い訳の性格、口調を表すためなら、相手にどれだけ不快感を与えてもよく、敬語も不要です。やや誇張気味に、指示された内容通りの言い訳を考えてください。"
+    print(out)
     return out
