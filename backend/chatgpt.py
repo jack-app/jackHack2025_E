@@ -29,43 +29,43 @@ res_1 = openai.chat.completions.create(
 )
 
 # 取得した理由の候補をリストに変換
-txt=res_1.choices[0].message.content
+txt = res_1.choices[0].message.content
 reasons = re.findall(r"\d+\.\s*(.+)", txt)
 
 print(txt)
 
 usr_reason = str(input("予定を断るための理由を選択してください："))
-m=None
+m = None
 
-date=input("代替日を入力してください：")
+date = input("代替日を入力してください：")
 if date != "":
-    m={
-            "role":"system",
-            "content":f"キャンセルする予定に対する代替日として{date}を提案してください。"
+    m = {
+        "role": "system",
+        "content": f"キャンセルする予定に対する代替日として{date}を提案してください。",
     }
 
-message=[
-        {
-            "role": "system",
-            "content": "日本語で返答してください。",
-        },
-        {
-            "role": "system",
-            "content": f"{usr_schedule}を,{usr_reason}を理由に断るビジネスメール風の文章を出力してください。",
-        },
-    ]
+message = [
+    {
+        "role": "system",
+        "content": "日本語で返答してください。",
+    },
+    {
+        "role": "system",
+        "content": f"{usr_schedule}を,{usr_reason}を理由に断るビジネスメール風の文章を出力してください。",
+    },
+]
 
-if  not (m is None):{
-    message.append(m)
-}
-    
-res_2 = openai.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=message
-)
+if not (m is None):
+    {message.append(m)}
+
+res_2 = openai.chat.completions.create(model="gpt-4o-mini", messages=message)
 
 while True:
-    usr_aite = str(input("言い訳を行う相手を入力してください。:"))
+    usr_aite = str(
+        input(
+            "言い訳を行う相手を入力してください。必要であれば以下のオプションを利用してください。:\n1.上司\n2.友達\n3.恋人\n4.同僚\n5.先輩"
+        )
+    )
     while True:  # 整数で入力されていない場合は受け付けない
         usr_taido = tuple(
             input(
