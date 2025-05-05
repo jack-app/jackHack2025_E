@@ -11,6 +11,9 @@ function App() {
   const [selectedEvent, setSelectedEvent] = useState(null); // 追加：選択中のイベント
   const [reasons, setReasons] = useState([]);
   const [cancelMessage, setCancelMessage] = useState("");
+  const [aite, setAite] = useState("");
+  const [attitudes, setAttitudes] = useState("");
+  const [refinedMessage, setRefinedMessage] = useState(""); // 生成後のリライト文章
 
   const handleLogin = async () => {
     try {
@@ -62,6 +65,60 @@ function App() {
       console.error("キャンセル理由取得失敗:", err);
     }
   };
+  const handleFeedback = async () => {
+    if (!selectedEvent || !cancelMessage || !aite || !attitudes) {
+      alert(
+        "相手、態度、キャンセル文章、予定がすべて入力されている必要があります"
+      );
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8000/cancel/refine", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          original_text: cancelMessage,
+          schedule: selectedEvent.summary,
+          aite: aite,
+          attitudes: attitudes,
+        }),
+      });
+
+      const data = await res.json();
+      setRefinedMessage(data.message);
+    } catch (err) {
+      console.error("リライト文章生成失敗:", err);
+      alert("リライト生成に失敗しました");
+    }
+  };
+
+
+  // ✅ 理由を選んだとき、キャンセル文を生成
+  const handleReasonClick = async (reason) => {
+    if (!selectedEvent) return;
+
+    try {
+      const res = await fetch("http://localhost:8000/cancel/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          schedule: selectedEvent.summary,
+          reason: reason,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setCancelMessage(data.message.message); // ← FastAPI 側が {"message": "..."} を返すことが前提
+      } catch (err) {
+      console.error("キャンセル文章生成失敗:", err);
+      }
+      };
 
   return (
     <>
@@ -110,7 +167,7 @@ function App() {
                   <ul>
                     {reasons.map((reason, idx) => (
                       <li key={idx}>
-                        <button>{reason}</button>
+                        <button onClick={() => handleReasonClick(reason)}>{reason}</button>
                       </li>
                     ))}
                   </ul>
@@ -137,6 +194,60 @@ function App() {
                       </button>
                     </div>
                   )}
+                  {cancelMessage && (
+                    <div style={{ marginTop: "20px" }}>
+                      <h4>文章を相手・態度に合わせて書き換える</h4>
+                      <label>
+                        相手:{" "}
+                        <input
+                          type="text"
+                          value={aite}
+                          onChange={(e) => setAite(e.target.value)}
+                          placeholder="例: 上司, 友達"
+                        />
+                      </label>
+                      <br />
+                      <label>
+                        態度（カンマ区切り）:{" "}
+                        <input
+                          type="text"
+                          value={attitudes}
+                          onChange={(e) => setAttitudes(e.target.value)}
+                          placeholder="例: 丁寧,申し訳なさ強め"
+                        />
+                      </label>
+                      <br />
+                      <button
+                        onClick={handleFeedback}
+                        style={{
+                          marginTop: "10px",
+                          padding: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Feedbackで書き換え
+                      </button>
+                    </div>
+                  )}
+                  {refinedMessage && (
+                    <div
+                      className="refined-message"
+                      style={{ marginTop: "20px" }}
+                    >
+                      <h4>書き換え後の文章</h4>
+                      <p>{refinedMessage}</p>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard
+                            .writeText(refinedMessage)
+                            .then(() => alert("コピーしました！"))
+                            .catch(() => alert("コピーに失敗しました"));
+                        }}
+                      >
+                        コピーする
+                      </button>
+                    </div>
+                  )}
             </>
           ) : (
             <>
@@ -146,7 +257,6 @@ function App() {
           )}
         </div>
         </div>
-        
     </>
   );
 }
