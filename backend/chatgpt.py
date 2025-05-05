@@ -28,7 +28,7 @@ res_1 = openai.chat.completions.create(
     ],
 )
 
-usr_aite = str(input("言い訳を行う相手を入力してください。:"))
+usr_aite = str(input("言い訳を行う相手を入力してください。必要であれば以下のオプションを利用してください。:\n1.上司\n2.友達\n3.恋人\n4.同僚\n5.先輩"))
 
 # 取得した理由の候補をリストに変換
 txt = res_1.choices[0].message.content
