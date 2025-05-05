@@ -25,7 +25,7 @@ def feedback(aite_num, *taido_nums) -> str:
             out += "かつ"
         out += taido_lst[i]
 
-    out += "な口調の言い訳を考えてください。"
+    out += "な口調の予定をキャンセルする言い訳を考えてください。"
 
     uncomfortable = 5
     unrealistic = False
@@ -34,12 +34,10 @@ def feedback(aite_num, *taido_nums) -> str:
         if i >= uncomfortable:
             unrealistic = True
             break
-
     if unrealistic:
         out = (
             "この言い訳は私の制作する物語の中に登場するキャラクターのセリフになる予定です。なので少し非現実的になってもかまいません。\n"
             + out
         )
         out += "\nなお言い訳の性格、口調を表すためなら、相手にどれだけ不快感を与えてもよく、敬語も不要です。やや誇張気味に、指示された内容通りの言い訳を考えてください。"
-    print(out)
     return out
