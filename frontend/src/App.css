@@ -92,8 +92,8 @@ button {
   border-radius: 8px; /* �p���ۂ߂� */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* �y���e��ǉ� */
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto;     /* 左を押しのけて右寄せ */
+  margin-right: 20px;  
 }
 
 label{
@@ -109,8 +109,8 @@ label{
   border-radius: 8px; /* �p���ۂ߂� */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* �y���e��ǉ� */
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto;     /* 左を押しのけて右寄せ */
+  margin-right: 20px;  
   color: white;
 }
 
@@ -122,8 +122,8 @@ label{
   border-radius: 8px; /* �p���ۂ߂� */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* �y���e��ǉ� */
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto;     /* 左を押しのけて右寄せ */
+  margin-right: 20px;  
   color: #fff;
 }
 
@@ -182,13 +182,14 @@ label{
   /* background-color: ; */
   display: flex;
   text-align: right;
+  color: #fefefe;
 
 }
 
 .taido {
   display: flex;
   text-align: right;
-
+  color: #fefefe;
 }
 
 .aite p {
@@ -206,13 +207,13 @@ label{
 .rewrite{
   margin-top: 20px;
   margin-left: 10px;
-
 }
 
 .feedbackButton {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 25%;
+    margin-left: auto;
+    margin-right: auto;  
     padding: 8px;
     cursor: pointer;
     display: block; 
