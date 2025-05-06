@@ -11,45 +11,27 @@
   top:0;
   left:0;
   height:10vh;
+  z-index: 1000; /* 他のコンテンツより上に来るように */
+
   }
   
   .logo {
   position: fixed;
   height: 10vh;
+  /* opacity: 0.75; */
 }
 
-.body{
-  left:0;
-  width:100vw;
-  display:flex;
-  height:90vh;
-  margin-top: 10vh;
-}
-
-.main {
-  background-color:#fff;
-  flex:7;
-  border-right: solid 3px;
-  border-image: linear-gradient(to bottom, rgb(163,239,237,0.75), rgba(155, 255, 165, 0.75)) 1;
-}
-
-.setting{
-  background-color: #fff;
-  flex:3;
-  padding: 16px;
-  font-family: 'Zen Maru Gothic';
-  text-align:  center;
-}
 
 fieldset {
   border: none;
+  margin: auto;
 }
 
 fieldset div {
   font-weight: 400;
   text-align: left;
   font-size: 1.2rem;
-  line-height: 2;
+  line-height: 2; 
 }
 
 fieldset input[type="checkbox"] {
@@ -65,35 +47,47 @@ fieldset legend {
   font-weight: 700;
   text-align: center;
   font-size: 1.5rem;
+  color: #333;
 
 }
 
-.GObutton {
-  position: absolute;
-  right: 30px;
-  margin-top:70px;
-  background-color:#AFDFE4;
+.logoutButton {
+  background-color:#6ce5f3;
   cursor: pointer;
-  font-family:'M PLUS Rounded 1c';
+  font-family:'Zen Maru Gothic';
   border-radius :8px;
   font-weight: 700;
   transition-duration: 2s;
+  margin: auto;
+  width: 10vw;
+  color: #fff;
 }
-.GObutton:hover {
+.logoutButton:hover {
   transform: scale(1.1);
 }
 
 button {
-  background-color: black;
+  background-color: #222;
+  color: #ddd;
   border: 1px solid #ccc;
   cursor: pointer;
   border-radius: 6px;
+}
+
+.sendButton {
+  color: #fff;
+  background-color: #666;
+  display: block;
+  margin: 0 auto;
+  font-family: 'Zen Maru Gothic';
+  font-weight: 700;
 }
 
 .selected-event {
   margin-top: 20px;
   padding: 20px;
   background-color: grey; /* �w�i�𔖂��O���[�� */
+  color: white;
   border: 1px solid #ccc; /* ���E�����y���\�� */
   border-radius: 8px; /* �p���ۂ߂� */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* �y���e��ǉ� */
@@ -102,8 +96,9 @@ button {
   margin-right: auto;
 }
 
-label{background-color: #333;
-      width: 300px;
+label{
+  /* background-color: #333; */
+  color: #333;
 }
 
 .cancel-message {
@@ -128,4 +123,79 @@ label{background-color: #333;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.loginButton {
+  color: #fff;
+  background-color: #444;
+  display: block;
+  margin: 0 auto;
+  font-family: 'Zen Maru Gothic';
+  font-weight: 700;
+}
+
+.body {
+  left: 0;
+  width: 100vw;
+  display: flex;
+  height: 90vh;
+  margin-top: 10vh;
+}
+
+/* mainは右に固定されるsideの分だけ幅を減らす */
+.main {
+  background-color: #fff;
+  width: 70vw;
+  border-right: solid 3px;
+  border-image: linear-gradient(to bottom, rgba(163, 239, 237, 0.75), rgba(155, 255, 165, 0.75)) 1;
+  overflow-y: auto; /* スクロールできるようにしたい場合 */
+}
+
+.side {
+  position: fixed;
+  right: 0;
+  top: 10vh; /* .bodyのmargin-topと合わせると揃う */
+  width: 30vw;
+  height: 90vh;
+  background-color: #eee; /* お好みで */
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;      /* 縦並びにする */
+  align-items: center; 
+}
+
+
+.setting{
+  /* background-color: ; */
+  background: linear-gradient(180deg, rgb(165,209,255,0.5),rgb(163,239,237,0.5));
+  padding: 16px;
+  font-family: 'Zen Maru Gothic';
+  color: white;
+  text-align:  center;
+}
+
+.aite {
+  /* background-color: ; */
+  display: flex;
+  text-align: right;
+
+}
+
+.taido {
+  display: flex;
+  text-align: right;
+
+}
+
+.aite p {
+  width: 15vw;
+  margin-right: 10px;
+
+}
+
+.taido p {
+  width: 15vw;
+  margin-right: 10px;
+
 }
