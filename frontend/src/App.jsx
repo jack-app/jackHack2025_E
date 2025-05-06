@@ -157,50 +157,17 @@ function App() {
       </div>
       <div className="body">
         <div className="main">
-          {user ? (
-            <>
-              <Box
-                color={"#111111"}
-                fontSize={"15px"}
-                sx={{
-                  backgroundColor: "#e3e3e3",
-                  position: "absolute",
-                  right: "10px",
-                  top: "20vh",
-                  padding: "2px",
-                }}
-              >
-                {user.displayName}さんでログイン中
-              </Box>
-              <Avatar
-                img src={user.photoURL}
-                alt="profile"
-                sx={{
-                  position: "absolute",
-                  top: "11vh",
-                  right: "30px",
-                  width: 50,
-                  height: 50,
-                }}
-              />
-              <br />
-              <button className="GObutton" onClick={handleLogout}>
-                ログアウト
-              </button>
-            </>
-          ) : (
-            <button onClick={handleLogin}>Googleでログイン</button>
-          )}
           {user && (
             <>
               <div className="event-list">
                 <Grid
-                  backgroundColor={"#aaa"}
-                  margin={"3px"}
-                  width={"80px"}
-                  sx={{ position: "absolute", left: "5%", top: "10vh" }}
+                  backgroundColor={"#ccc"}
+                  margin={"10px"}
+                  width={"140px"}
+                  textAlign={"center"}
+                  sx={{left: "5%", top: "10vh" }}
                 >
-                  <Typography fontWeight={"bold"} margin={"5px"}>
+                  <Typography fontSize={"1.4rem"} fontFamily={"Zen Maru Gothic"} fontWeight={"bold"} margin={"5px"}>
                     予定一覧
                   </Typography>
                 </Grid>
@@ -265,10 +232,10 @@ function App() {
               {cancelMessage && (
                 <div style={{ marginTop: "20px" }}>
                   <h4>文章を相手・態度に合わせて書き換える</h4>
-                  <label>
-                    相手:{" "}
+                  <label className="aite">
+                    <p>相手 :{" "}</p>
                     <TextField
-                      sx={{ left: "16.5vw" }}
+                      // sx={{ left: "15vw" }}
                       type="text"
                       value={aite}
                       onChange={(e) => setAite(e.target.value)}
@@ -276,10 +243,10 @@ function App() {
                     />
                   </label>
                   <br />
-                  <label>
-                    態度（カンマ区切り）:{" "}
+                  <label className="taido">
+                    <p>態度（カンマ区切り）:{" "}</p>
                     <TextField
-                      sx={{ left: "16.5vw" }}
+                      // sx={{ left: "15vw" }}
                       type="text"
                       value={attitudes}
                       onChange={(e) => setAttitudes(e.target.value)}
@@ -327,6 +294,43 @@ function App() {
                 </div>
               )}
 
+            </>
+          )}
+        </div>
+        <div className="side">
+        {user ? (
+            <>
+              <Box
+                color={"#111111"}
+                fontSize={"15px"}
+                sx={{
+                  backgroundColor: "#e3e3e3",
+                  // position: "absolute",
+                  padding: "2px",
+                  fontFamily: 'Zen Maru Gothic',
+                  textAlign: "center",
+                  margin: "auto",
+                  width: "10vw",
+                }}
+              >
+                {user.displayName}さんで<br />ログイン中
+              </Box>
+              <Avatar
+                img src={user.photoURL}
+                alt="profile"
+                sx={{
+                  width: 50,
+                  height: 50,
+                  margin: "auto",
+                }}
+              />
+              <button className="logoutButton" onClick={handleLogout}>
+                ログアウト
+              </button>
+            </>
+          ) : (
+            <button class="loginButton" onClick={handleLogin}>Googleでログイン</button>
+          )}
               <div className="setting">
                 <form>
                   <fieldset>
@@ -389,10 +393,8 @@ function App() {
                     </div>
                   </fieldset>
                 </form>
-                <button onClick={handleGOButtonClick}>GO</button>
+                <button class="sendButton" onClick={handleGOButtonClick}>設定</button>
               </div>
-            </>
-          )}
         </div>
       </div>
     </>
