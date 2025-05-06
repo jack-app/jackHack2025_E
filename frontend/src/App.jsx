@@ -230,7 +230,7 @@ function App() {
               )}
 
               {cancelMessage && (
-                <div style={{ marginTop: "20px" }}>
+                <div class="rewrite">
                   <h4>文章を相手・態度に合わせて書き換える</h4>
                   <label className="aite">
                     <p>相手 :{" "}</p>
@@ -254,20 +254,12 @@ function App() {
                     />
                   </label>
                   <br />
-                  <button
-                    onClick={handleFeedback}
-                    style={{
-                      marginTop: "10px",
-                      padding: "8px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <button class="feedbackButton"  onClick={handleFeedback}>
                     Feedbackで書き換え
                   </button>
                     {refinedMessage && (
                     <div
                       className="refined-message"
-                      style={{ marginTop: "20px" }}
                     >
                       <h4>書き換え後の文章</h4>
                       <br />
@@ -309,7 +301,6 @@ function App() {
                   padding: "2px",
                   fontFamily: 'Zen Maru Gothic',
                   textAlign: "center",
-                  margin: "auto",
                   width: "10vw",
                 }}
               >
@@ -321,7 +312,6 @@ function App() {
                 sx={{
                   width: 50,
                   height: 50,
-                  margin: "auto",
                 }}
               />
               <button className="logoutButton" onClick={handleLogout}>
@@ -331,6 +321,7 @@ function App() {
           ) : (
             <button class="loginButton" onClick={handleLogin}>Googleでログイン</button>
           )}
+          {cancelMessage && (
               <div className="setting">
                 <form>
                   <fieldset>
@@ -395,6 +386,7 @@ function App() {
                 </form>
                 <button class="sendButton" onClick={handleGOButtonClick}>設定</button>
               </div>
+          )}
         </div>
       </div>
     </>
