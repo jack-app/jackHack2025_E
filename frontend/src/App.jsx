@@ -167,7 +167,7 @@ function App() {
                   textAlign={"center"}
                   sx={{left: "5%", top: "10vh" }}
                 >
-                  <Typography fontSize={"1.4rem"} fontFamily={"Zen Maru Gothic"} fontWeight={"bold"} margin={"5px"}>
+                  <Typography color="#010101" fontSize={"1.4rem"} fontFamily={"Zen Maru Gothic"} fontWeight={"bold"} margin={"5px"}>
                     予定一覧
                   </Typography>
                 </Grid>
@@ -231,11 +231,25 @@ function App() {
 
               {cancelMessage && (
                 <div class="rewrite">
-                  <h4>文章を相手・態度に合わせて書き換える</h4>
+                  <Box color={"#fefefe"}  padding="10px" borderRadius='12px' backgroundColor="#1976d2" width={"450px"}>
+                  <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>文章を相手・態度に合わせて書き換える</p>
                   <label className="aite">
                     <p>相手 :{" "}</p>
                     <TextField
-                      // sx={{ left: "15vw" }}
+                      sx={{
+                        backgroundColor: '#f0f0f0', // 背景色
+                        '& .MuiInputBase-input::placeholder': {
+                          color: '#333', // プレースホルダーの色
+                          opacity: 1,       // 薄くならないように
+                        },
+                      
+                          // 通常時の枠線
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: '#ccc', // 通常の枠線色
+                            },
+                      }}}
+                      backgroundColor="#fefefe"
                       type="text"
                       value={aite}
                       onChange={(e) => setAite(e.target.value)}
@@ -246,17 +260,29 @@ function App() {
                   <label className="taido">
                     <p>態度（カンマ区切り）:{" "}</p>
                     <TextField
-                      // sx={{ left: "15vw" }}
+                    sx={{
+                      backgroundColor: '#f0f0f0', // 背景色
+                      '& .MuiInputBase-input::placeholder': {
+                        color: '#333', // プレースホルダーの色
+                        opacity: 1,       // 薄くならないように
+                      },
+                    
+                        // 通常時の枠線
+                        '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                            borderColor: '#ccc', // 通常の枠線色
+                          },
+                    }}}
                       type="text"
                       value={attitudes}
                       onChange={(e) => setAttitudes(e.target.value)}
                       placeholder="例: 丁寧,申し訳なさ強め"
                     />
                   </label>
-                  <br />
                   <button class="feedbackButton"  onClick={handleFeedback}>
                     Feedbackで書き換え
                   </button>
+                  </Box>
                     {refinedMessage && (
                     <div
                       className="refined-message"
